@@ -30,7 +30,7 @@ namespace CryptoWallet
 
         private void signOutButton_Click(object sender, EventArgs e)
         {
-            Form1 form = new Form1();
+            Login form = new Login();
             form.Show();
         }
 

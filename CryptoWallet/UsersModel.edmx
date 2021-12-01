@@ -1,0 +1,214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="UsersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\HOUNM\SOURCE\REPOS\CRYPTO\CRYPTOWALLET\USERS.MDF.dbo.BankingInformation' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="BankingInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="DebitBalance" Type="int" />
+          <Property Name="CryptoBalance" Type="int" />
+        </EntityType>
+        <EntityType Name="CryptoInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="int" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="PersonalInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Age" Type="int" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_BankingInformation_PersonalInformation">
+          <End Role="PersonalInformation" Type="Self.PersonalInformation" Multiplicity="1" />
+          <End Role="BankingInformation" Type="Self.BankingInformation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalInformation">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BankingInformation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CryptoInformation_PersonalInformation">
+          <End Role="PersonalInformation" Type="Self.PersonalInformation" Multiplicity="1" />
+          <End Role="CryptoInformation" Type="Self.CryptoInformation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalInformation">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CryptoInformation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UsersModelStoreContainer">
+          <EntitySet Name="CryptoInformation" EntityType="Self.CryptoInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PersonalInformation" EntityType="Self.PersonalInformation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BankingInformation" EntityType="Self.BankingInformation" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+[BankingInformation].[UserId] AS [UserId], 
+[BankingInformation].[DebitBalance] AS [DebitBalance], 
+[BankingInformation].[CryptoBalance] AS [CryptoBalance]
+FROM [dbo].[BankingInformation] AS [BankingInformation]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_BankingInformation_PersonalInformation" Association="Self.FK_BankingInformation_PersonalInformation">
+            <End Role="PersonalInformation" EntitySet="PersonalInformation" />
+            <End Role="BankingInformation" EntitySet="BankingInformation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CryptoInformation_PersonalInformation" Association="Self.FK_CryptoInformation_PersonalInformation">
+            <End Role="PersonalInformation" EntitySet="PersonalInformation" />
+            <End Role="CryptoInformation" EntitySet="CryptoInformation" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="UsersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CryptoInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="PersonalInformation" Relationship="UsersModel.FK_CryptoInformation_PersonalInformation" FromRole="CryptoInformation" ToRole="PersonalInformation" />
+        </EntityType>
+        <EntityType Name="PersonalInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Age" Type="Int32" />
+          <NavigationProperty Name="BankingInformation" Relationship="Self.FK_BankingInformation_PersonalInformation" FromRole="PersonalInformation" ToRole="BankingInformation" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CryptoInformation" Relationship="UsersModel.FK_CryptoInformation_PersonalInformation" FromRole="PersonalInformation" ToRole="CryptoInformation" />
+        </EntityType>
+        <EntityType Name="BankingInformation">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="DebitBalance" Type="Int32" />
+          <Property Name="CryptoBalance" Type="Int32" />
+          <NavigationProperty Name="PersonalInformation" Relationship="Self.FK_BankingInformation_PersonalInformation" FromRole="BankingInformation" ToRole="PersonalInformation" />
+        </EntityType>
+        <Association Name="FK_BankingInformation_PersonalInformation">
+          <End Role="PersonalInformation" Type="Self.PersonalInformation" Multiplicity="1" />
+          <End Role="BankingInformation" Type="Self.BankingInformation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalInformation">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="BankingInformation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UsersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CryptoInformations" EntityType="Self.CryptoInformation" />
+          <EntitySet Name="PersonalInformations" EntityType="Self.PersonalInformation" />
+          <EntitySet Name="BankingInformations" EntityType="Self.BankingInformation" />
+          <AssociationSet Name="FK_BankingInformation_PersonalInformation" Association="Self.FK_BankingInformation_PersonalInformation">
+            <End Role="PersonalInformation" EntitySet="PersonalInformations" />
+            <End Role="BankingInformation" EntitySet="BankingInformations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CryptoInformation_PersonalInformation" Association="UsersModel.FK_CryptoInformation_PersonalInformation">
+            <End Role="PersonalInformation" EntitySet="PersonalInformations" />
+            <End Role="CryptoInformation" EntitySet="CryptoInformations" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_CryptoInformation_PersonalInformation">
+          <End Type="UsersModel.PersonalInformation" Role="PersonalInformation" Multiplicity="1" />
+          <End Type="UsersModel.CryptoInformation" Role="CryptoInformation" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="PersonalInformation">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="CryptoInformation">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="UsersModelStoreContainer" CdmEntityContainer="UsersEntities">
+          <EntitySetMapping Name="CryptoInformations">
+            <EntityTypeMapping TypeName="UsersModel.CryptoInformation">
+              <MappingFragment StoreEntitySet="CryptoInformation">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PersonalInformations">
+            <EntityTypeMapping TypeName="UsersModel.PersonalInformation">
+              <MappingFragment StoreEntitySet="PersonalInformation">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Age" ColumnName="Age" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BankingInformations">
+            <EntityTypeMapping TypeName="UsersModel.BankingInformation">
+              <MappingFragment StoreEntitySet="BankingInformation">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="DebitBalance" ColumnName="DebitBalance" />
+                <ScalarProperty Name="CryptoBalance" ColumnName="CryptoBalance" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

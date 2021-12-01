@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="UsersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CryptoInformation">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="PersonalInformation" Relationship="UsersModel.FK_CryptoInformation_PersonalInformation" FromRole="CryptoInformation" ToRole="PersonalInformation" />
+  </EntityType>
+  <EntityType Name="PersonalInformation">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Age" Type="Int32" />
+    <NavigationProperty Name="BankingInformation" Relationship="Self.FK_BankingInformation_PersonalInformation" FromRole="PersonalInformation" ToRole="BankingInformation" />
+    <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CryptoInformation" Relationship="UsersModel.FK_CryptoInformation_PersonalInformation" FromRole="PersonalInformation" ToRole="CryptoInformation" />
+  </EntityType>
+  <EntityType Name="BankingInformation">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="Int32" Nullable="false" />
+    <Property Name="DebitBalance" Type="Int32" />
+    <Property Name="CryptoBalance" Type="Int32" />
+    <NavigationProperty Name="PersonalInformation" Relationship="Self.FK_BankingInformation_PersonalInformation" FromRole="BankingInformation" ToRole="PersonalInformation" />
+  </EntityType>
+  <Association Name="FK_BankingInformation_PersonalInformation">
+    <End Role="PersonalInformation" Type="Self.PersonalInformation" Multiplicity="1" />
+    <End Role="BankingInformation" Type="Self.BankingInformation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PersonalInformation">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="BankingInformation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="UsersEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CryptoInformations" EntityType="Self.CryptoInformation" />
+    <EntitySet Name="PersonalInformations" EntityType="Self.PersonalInformation" />
+    <EntitySet Name="BankingInformations" EntityType="Self.BankingInformation" />
+    <AssociationSet Name="FK_BankingInformation_PersonalInformation" Association="Self.FK_BankingInformation_PersonalInformation">
+      <End Role="PersonalInformation" EntitySet="PersonalInformations" />
+      <End Role="BankingInformation" EntitySet="BankingInformations" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CryptoInformation_PersonalInformation" Association="UsersModel.FK_CryptoInformation_PersonalInformation">
+      <End Role="PersonalInformation" EntitySet="PersonalInformations" />
+      <End Role="CryptoInformation" EntitySet="CryptoInformations" />
+    </AssociationSet>
+  </EntityContainer>
+  <Association Name="FK_CryptoInformation_PersonalInformation">
+    <End Type="UsersModel.PersonalInformation" Role="PersonalInformation" Multiplicity="1" />
+    <End Type="UsersModel.CryptoInformation" Role="CryptoInformation" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="PersonalInformation">
+        <PropertyRef Name="UserId" />
+      </Principal>
+      <Dependent Role="CryptoInformation">
+        <PropertyRef Name="UserId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "9781b469-609b-49f7-8b6a-9cdaca55ff78": {
+      "ProjectGuid": "9781b469-609b-49f7-8b6a-9cdaca55ff78",
+      "DisplayName": "CryptoWallet",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

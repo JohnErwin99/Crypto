@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="UsersModelStoreContainer" CdmEntityContainer="UsersEntities">
+    <EntitySetMapping Name="CryptoInformations">
+      <EntityTypeMapping TypeName="UsersModel.CryptoInformation">
+        <MappingFragment StoreEntitySet="CryptoInformation">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonalInformations">
+      <EntityTypeMapping TypeName="UsersModel.PersonalInformation">
+        <MappingFragment StoreEntitySet="PersonalInformation">
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BankingInformations">
+      <EntityTypeMapping TypeName="UsersModel.BankingInformation">
+        <MappingFragment StoreEntitySet="BankingInformation">
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="DebitBalance" ColumnName="DebitBalance" />
+          <ScalarProperty Name="CryptoBalance" ColumnName="CryptoBalance" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

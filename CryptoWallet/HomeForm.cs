@@ -87,17 +87,20 @@ namespace CryptoWallet
 
         private void withdrawToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            WithdrawForm withdawForm = new WithdrawForm();
+            withdawForm.Show();
         }
 
         private void depositToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            DepositFormcs deposit = new DepositFormcs();
+            deposit.Show();
         }
 
         private void transferToolStripMenuItem_Click(object sender, EventArgs e)
         {
             TransferForm transfer = new TransferForm();
+            transfer.Show();
         }
     }
 }

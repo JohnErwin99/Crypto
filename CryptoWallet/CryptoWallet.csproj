@@ -119,6 +119,18 @@
       <DependentUpon>CryptoModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="DbConnection.cs" />
+    <Compile Include="DepositConfirmationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepositConfirmationForm.Designer.cs">
+      <DependentUpon>DepositConfirmationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DepositFormcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DepositFormcs.Designer.cs">
+      <DependentUpon>DepositFormcs.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileOperation.cs" />
     <Compile Include="Inventory.cs">
       <DependentUpon>CryptoModel.tt</DependentUpon>
@@ -196,6 +208,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CryptoInfoViewer.resx">
       <DependentUpon>CryptoInfoViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepositConfirmationForm.resx">
+      <DependentUpon>DepositConfirmationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DepositFormcs.resx">
+      <DependentUpon>DepositFormcs.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Login.resx">
       <DependentUpon>Login.cs</DependentUpon>

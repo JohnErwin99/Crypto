@@ -77,6 +77,12 @@
     <Compile Include="BuyMoreForm.Designer.cs">
       <DependentUpon>BuyMoreForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfirmInfoForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmInfoForm.Designer.cs">
+      <DependentUpon>ConfirmInfoForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CryptoDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,6 +146,12 @@
     <Compile Include="SignUpForm.Designer.cs">
       <DependentUpon>SignUpForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="TransferForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TransferForm.Designer.cs">
+      <DependentUpon>TransferForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="User.cs" />
     <Compile Include="UsersDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -163,6 +175,9 @@
     </Compile>
     <EmbeddedResource Include="BuyMoreForm.resx">
       <DependentUpon>BuyMoreForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmInfoForm.resx">
+      <DependentUpon>ConfirmInfoForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CryptoInfoViewer.resx">
       <DependentUpon>CryptoInfoViewer.cs</DependentUpon>
@@ -188,6 +203,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SignUpForm.resx">
       <DependentUpon>SignUpForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TransferForm.resx">
+      <DependentUpon>TransferForm.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="CryptoModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

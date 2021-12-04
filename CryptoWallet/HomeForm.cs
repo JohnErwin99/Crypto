@@ -97,7 +97,7 @@ namespace CryptoWallet
 
         private void transferToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            TransferForm transfer = new TransferForm();
         }
     }
 }

@@ -22,6 +22,11 @@ namespace CryptoWallet
             return amountTextBox.Text;
         }
 
+        public string getEmail()
+        {
+            return emailTextBox.Text;
+        }
+
         private void amountTextBox_TextChanged(object sender, EventArgs e)
         {
            

@@ -24,12 +24,14 @@ namespace CryptoWallet
 
         private void sendingAmountTextBox_TextChanged(object sender, EventArgs e)
         {
-            
+            // getting the amount from the Transfer Form
+            sendingAmountTextBox.Text = new TransferForm().getAmount();
         }
 
         private void recieverTextBox_TextChanged(object sender, EventArgs e)
         {
-
+            // getting the email address from the Transfer Form
+            recieverTextBox.Text = new TransferForm().getEmail();
         }
     }
 }

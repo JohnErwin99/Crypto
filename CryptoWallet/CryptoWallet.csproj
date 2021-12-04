@@ -83,6 +83,12 @@
     <Compile Include="ConfirmInfoForm.Designer.cs">
       <DependentUpon>ConfirmInfoForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConfirmWithdrawForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmWithdrawForm.Designer.cs">
+      <DependentUpon>ConfirmWithdrawForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CryptoDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -173,11 +179,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>UsersModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="WithdrawForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WithdrawForm.Designer.cs">
+      <DependentUpon>WithdrawForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="BuyMoreForm.resx">
       <DependentUpon>BuyMoreForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfirmInfoForm.resx">
       <DependentUpon>ConfirmInfoForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmWithdrawForm.resx">
+      <DependentUpon>ConfirmWithdrawForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CryptoInfoViewer.resx">
       <DependentUpon>CryptoInfoViewer.cs</DependentUpon>
@@ -206,6 +221,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TransferForm.resx">
       <DependentUpon>TransferForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WithdrawForm.resx">
+      <DependentUpon>WithdrawForm.cs</DependentUpon>
     </EmbeddedResource>
     <EntityDeploy Include="CryptoModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>

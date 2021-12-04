@@ -40,6 +40,7 @@ namespace CryptoWallet
         private void continueButton_Click(object sender, EventArgs e)
         {
             ConfirmInfoForm confirm = new ConfirmInfoForm();
+            confirm.Show();
         }
     }
 }

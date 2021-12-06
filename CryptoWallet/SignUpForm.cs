@@ -75,7 +75,7 @@ namespace CryptoWallet
                     {
                         DbConnection userdb = new DbConnection(USER_DB_CONNECTION_STRING, first, last, email, age, password);
                         userdb.insertPersonalInformation();
-                        userdb.insertBankingInformation();
+                        //userdb.insertBankingInformation();
                     }
                     catch (Exception ex)
                     {

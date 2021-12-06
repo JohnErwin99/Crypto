@@ -12,9 +12,21 @@ namespace CryptoWallet
 {
     public partial class ConfirmWithdrawForm : Form
     {
+        private readonly string USER_DB_CONNECTION_STRING = @"data source=(LocalDB)\MSSQLLocalDB;attachdbfilename=|DataDirectory|\Users.mdf;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework";
+
+        string transitNum;
+        string withdrawAmount;
         public ConfirmWithdrawForm()
+        {   
+            InitializeComponent();
+        }
+        public ConfirmWithdrawForm(string transitNum, string withdrawAmount)
         {
             InitializeComponent();
+            this.transitNum = transitNum;
+            this.withdrawAmount = withdrawAmount;
+            transitNumberTextBox.Text = transitNum;
+            withdawAmountTextBox.Text = withdrawAmount;
         }
 
         private void exitButton_Click(object sender, EventArgs e)
@@ -32,6 +44,15 @@ namespace CryptoWallet
         {
             //get transit from withdraw form
             transitNumberTextBox.Text = new WithdrawForm().getTransit();
+        }
+
+        private void withdrawButton_Click(object sender, EventArgs e)
+        {
+            DbConnection withdraw = new DbConnection(USER_DB_CONNECTION_STRING, Int32.Parse(withdrawAmount));
+            int remainingBalance = withdraw.readBankingInformation2();
+
+            withdraw.updateBankingInformation(remainingBalance);
+
         }
     }
 }

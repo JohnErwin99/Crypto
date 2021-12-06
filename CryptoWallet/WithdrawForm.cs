@@ -19,7 +19,7 @@ namespace CryptoWallet
 
         private void continueButton_Click(object sender, EventArgs e)
         {
-            ConfirmWithdrawForm confWithdraw = new ConfirmWithdrawForm();
+            ConfirmWithdrawForm confWithdraw = new ConfirmWithdrawForm(getTransit(), getAmount());
             confWithdraw.Show();
         }
 

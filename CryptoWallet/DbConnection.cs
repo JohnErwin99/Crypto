@@ -19,8 +19,11 @@ namespace CryptoWallet
         private int age;
         private string password;
 
-        private int debit;
-        private int crypto;
+        private string cryptoName;
+        private int cryptoQty;
+        private int cryptoPrice;
+
+
         public DbConnection(string url, string fname, string lname, string email,
             int age, string password)
         {
@@ -32,21 +35,37 @@ namespace CryptoWallet
             this.password = password;
         }
 
-        //second constructor
-        public DbConnection(string url, int debit, int crypto)
+        public DbConnection(string url, int totalCrytoPrice)
         {
             connectionString = url;
-            this.debit = debit; 
-            this.crypto = crypto;
+            this.cryptoPrice = totalCrytoPrice;
         }
 
-        //third constructor
+        //third 
         public DbConnection(string url, string email, string password)
         {
             connectionString = url;
             this.email=email;
             this.password=password;
         }
+
+        public DbConnection(string url, string name, int quantity)
+        {
+            this.connectionString = url;
+            this.cryptoName = name;
+            this.cryptoQty = quantity;
+        }
+
+        public DbConnection(string url, string name, int price, int quantity)
+        {
+            this.connectionString = url;
+            this.cryptoName = name;
+            this.cryptoPrice = price;                   
+            this.cryptoQty = quantity;
+        }
+
+
+        //INSERTS
         public void insertPersonalInformation()
         {
             string textQuery = "insert into PersonalInformation (UserId, FirstName,LastName," +
@@ -60,7 +79,7 @@ namespace CryptoWallet
                 command.CommandText = textQuery;
 
 
-                command.Parameters.AddWithValue("@id", 0);
+                command.Parameters.AddWithValue("@id", 2);
                 command.Parameters.AddWithValue("@fname", fname);
                 command.Parameters.AddWithValue("@lname", lname);
                 command.Parameters.AddWithValue("@email", email);
@@ -81,6 +100,39 @@ namespace CryptoWallet
             
         }
 
+        public void insertCryptoInformation()
+        {
+            string textQuery = "insert into CryptoInformation (UserId, Name,Price," +
+                "Quantity) values (@id, @name, @price, @qty)";
+
+            try
+            {
+                SqlConnection con = new SqlConnection(@connectionString);
+                SqlCommand command = new SqlCommand(textQuery, con);
+                command.CommandType = CommandType.Text;
+                command.CommandText = textQuery;
+
+
+                command.Parameters.AddWithValue("@id", 1);
+                command.Parameters.AddWithValue("@name", cryptoName);
+                command.Parameters.AddWithValue("@price", cryptoPrice);
+                command.Parameters.AddWithValue("@qty", cryptoQty);
+
+
+                con.Open();
+                command.ExecuteNonQuery();
+                con.Close();
+
+                MessageBox.Show($"Cryto {cryptoName} was just bought at a price of {cryptoPrice}$ with a quantity of {cryptoQty}units :");
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "");
+            }
+
+        }
+        //READS
         public void readPersonalInformation(Form previousform)
         {
             string textQuery = "select * from PersonalInformation where Email='"+ email +
@@ -96,7 +148,6 @@ namespace CryptoWallet
                 adpt.Fill(dt);
                 if (dt.Rows.Count == 1)
                 {
-
                     previousform.Hide();
                     HomeForm home = new HomeForm(email);
                     home.Show();
@@ -113,36 +164,165 @@ namespace CryptoWallet
             }
 
         }
-
-        public void insertBankingInformation()
+        public string readCryptoInformation()
         {
-            string textQuery = "insert into BankingInformation (UserId, DebitBalance, CryptoBalance" +
-                ") values (@id, @debit,@crypto)";
-
+            string textQuery = "select Price from Inventory where Name='" + cryptoName + "'";
+            string itemprice = "";
             try
             {
                 SqlConnection con = new SqlConnection(@connectionString);
                 SqlCommand command = new SqlCommand(textQuery, con);
+                SqlDataAdapter adpt = new SqlDataAdapter(command);
+                con.Open();
+                DataTable dt = new DataTable();
+                adpt.Fill(dt);
+                foreach (DataRow dr in dt.Rows)
+                {
+                    itemprice =  dr["Price"].ToString();
+                }
+                con.Close();
+            }
+            catch (NullReferenceException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return itemprice;
+        }
+        //reads debitamount
+        public int readBankingInformation()
+        {
+            string textQuery = "select DebitBalance from BankingInformation where UserId='" + 1 + "'";
+            int balanceLeftAmount = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(@connectionString);
+                SqlCommand command = new SqlCommand(textQuery, con);
+                SqlDataAdapter adpt = new SqlDataAdapter(command);
                 command.CommandType = CommandType.Text;
                 command.CommandText = textQuery;
-
-
-                command.Parameters.AddWithValue("@id", 0);
-                command.Parameters.AddWithValue("@debit", debit);
-                command.Parameters.AddWithValue("@crypto", crypto);
-
                 con.Open();
+                DataTable dt = new DataTable();
+                adpt.Fill(dt);
+
+                balanceLeftAmount = Int32.Parse(dt.Rows[0]["DebitBalance"].ToString()) - cryptoPrice;
                 command.ExecuteNonQuery();
                 con.Close();
-
-                MessageBox.Show("Transit is sucessfully saved.");
 
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "error");
             }
+            return balanceLeftAmount;
+        }
 
+        public int readBankingInformation2()
+        {
+            string textQuery = "select DebitBalance from BankingInformation where UserId='" + 1 + "'";
+            int balanceLeftAmount = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(@connectionString);
+                SqlCommand command = new SqlCommand(textQuery, con);
+                SqlDataAdapter adpt = new SqlDataAdapter(command);
+                command.CommandType = CommandType.Text;
+                command.CommandText = textQuery;
+                con.Open();
+                DataTable dt = new DataTable();
+                adpt.Fill(dt);
+
+                balanceLeftAmount = Int32.Parse(dt.Rows[0]["DebitBalance"].ToString()) + cryptoPrice;
+                command.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error");
+            }
+            return balanceLeftAmount;
+        }
+        //reads cryptoAmount
+        public int readBankingCryptoInformation()
+        {
+            string textQuery = "select CryptoBalance from BankingInformation where UserId='" + 1 + "'";
+            int balanceLeftAmount = 0;
+            try
+            {
+                SqlConnection con = new SqlConnection(@connectionString);
+                SqlCommand command = new SqlCommand(textQuery, con);
+                SqlDataAdapter adpt = new SqlDataAdapter(command);
+                command.CommandType = CommandType.Text;
+                command.CommandText = textQuery;
+                con.Open();
+                DataTable dt = new DataTable();
+                adpt.Fill(dt);
+
+                balanceLeftAmount = Int32.Parse(dt.Rows[0]["CryptoBalance"].ToString()) - cryptoPrice;
+                command.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error");
+            }
+            return balanceLeftAmount;
+        }
+
+
+        //UPDATES
+
+        public void updateBankingInformation(int remainingBalance)
+        {
+            string textQuery = "update BankingInformation set DebitBalance=@debit where UserId=@id";
+            int balanceLeftAmount = remainingBalance;
+            try
+            {
+                SqlConnection con = new SqlConnection(@connectionString);
+                SqlCommand command = new SqlCommand(textQuery, con);
+                command.CommandType = CommandType.Text;
+                command.CommandText = textQuery;
+                con.Open();
+
+
+                command.Parameters.AddWithValue("@id", 1);
+                command.Parameters.AddWithValue("@debit", balanceLeftAmount);
+                MessageBox.Show($"Balance updated:\n Remaining is: {balanceLeftAmount} $");
+                command.ExecuteNonQuery();
+                con.Close();
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error");
+            }
+        }
+       
+        public void updateBankingCryptoInformation(int remainingBalance)
+        {
+            string textQuery = "update BankingInformation set CryptoBalance=@crypto where UserId=@id";
+            int balanceLeftAmount = remainingBalance;
+            try
+            {
+                SqlConnection con = new SqlConnection(@connectionString);
+                SqlCommand command = new SqlCommand(textQuery, con);
+                command.CommandType = CommandType.Text;
+                command.CommandText = textQuery;
+                con.Open();
+
+
+                command.Parameters.AddWithValue("@id", 1);
+                command.Parameters.AddWithValue("@crypto", balanceLeftAmount);
+                MessageBox.Show($"Balance updated \n Remaining is: {balanceLeftAmount}$");
+                command.ExecuteNonQuery();
+                con.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "error");
+            }
         }
 
 

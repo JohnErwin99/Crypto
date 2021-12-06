@@ -81,8 +81,7 @@ namespace CryptoWallet
 
         private void sellButton_Click(object sender, EventArgs e)
         {
-            SellForm sell = new SellForm();
-            sell.Show();
+            
         }
 
         private void withdrawToolStripMenuItem_Click(object sender, EventArgs e)
@@ -93,7 +92,7 @@ namespace CryptoWallet
 
         private void depositToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DepositFormcs deposit = new DepositFormcs();
+            DepositForm deposit = new DepositForm();
             deposit.Show();
         }
 
@@ -101,6 +100,13 @@ namespace CryptoWallet
         {
             TransferForm transfer = new TransferForm();
             transfer.Show();
+        }
+
+        private void downloadTransferHistoryToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            viewTxtFile readFile = new viewTxtFile();
+            this.Hide();
+            readFile.Show();
         }
     }
 }

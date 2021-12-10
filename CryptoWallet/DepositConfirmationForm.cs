@@ -44,14 +44,14 @@ namespace CryptoWallet
         private void depositButton_Click(object sender, EventArgs e)
         {
             DbConnection deposit = new DbConnection(USER_DB_CONNECTION_STRING, Int32.Parse(depositAmount));
-            int remainingCryptoBalance = deposit.readBankingCryptoInformation();
+            int remainingCryptoBalance = deposit.readBankingInformation();
             if (remainingCryptoBalance < 0)
             {
                 MessageBox.Show($"Not enough crypto funds.");
             }
             else
             {
-                deposit.updateBankingCryptoInformation(remainingCryptoBalance);
+                deposit.updateBankingInformation(remainingCryptoBalance);
             }
         }
     }

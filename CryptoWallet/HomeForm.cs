@@ -108,5 +108,10 @@ namespace CryptoWallet
             this.Hide();
             readFile.Show();
         }
+
+        private void cryptoBalanceLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

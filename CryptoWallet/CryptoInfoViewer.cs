@@ -40,6 +40,7 @@ namespace CryptoWallet
                 .Load();
 
             inventoryBindingSource.DataSource = cryptoCbContext.Inventories.Local;
+            inventoryBindingSource1.DataSource = cryptoCbContext.Inventories.Local;
         }
 
     }

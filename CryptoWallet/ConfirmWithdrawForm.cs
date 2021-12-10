@@ -49,10 +49,9 @@ namespace CryptoWallet
         private void withdrawButton_Click(object sender, EventArgs e)
         {
             DbConnection withdraw = new DbConnection(USER_DB_CONNECTION_STRING, Int32.Parse(withdrawAmount));
-            int remainingBalance = withdraw.readBankingInformation2();
+            int remainingBalance = withdraw.readBankingInformation();
 
             withdraw.updateBankingInformation(remainingBalance);
-
         }
     }
 }

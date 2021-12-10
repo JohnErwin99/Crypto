@@ -62,7 +62,7 @@ namespace CryptoWallet
             else
             {
                 DbConnection transfer = new DbConnection(USER_DB_CONNECTION_STRING, Int32.Parse(transferAmount));
-                int remainingCryptoBalance = transfer.readBankingCryptoInformation();
+                int remainingCryptoBalance = transfer.readBankingInformation();
                 if (remainingCryptoBalance < 0)
                 {
                     MessageBox.Show($"Not enough crypto funds.");

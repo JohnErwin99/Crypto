@@ -31,7 +31,6 @@ namespace CryptoWallet
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label cryptoBalanceLabel;
-            System.Windows.Forms.Label debitBalanceLabel;
             System.Windows.Forms.Label userIdLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomeForm));
             this.userNamelabel = new System.Windows.Forms.Label();
@@ -40,6 +39,7 @@ namespace CryptoWallet
             this.withdrawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.depositToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transferToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.downloadTransferHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.currenciesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.xCurrencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.yCurrencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,7 +50,6 @@ namespace CryptoWallet
             this.Balances = new System.Windows.Forms.Panel();
             this.cryptoBalanceLabel1 = new System.Windows.Forms.Label();
             this.bankingInformationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.debitBalanceLabel1 = new System.Windows.Forms.Label();
             this.userIdLabel1 = new System.Windows.Forms.Label();
             this.bankingInformationBindingNavigator = new System.Windows.Forms.BindingNavigator(this.components);
             this.bindingNavigatorAddNewItem = new System.Windows.Forms.ToolStripButton();
@@ -71,9 +70,7 @@ namespace CryptoWallet
             this.label2 = new System.Windows.Forms.Label();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.downloadTransferHistoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             cryptoBalanceLabel = new System.Windows.Forms.Label();
-            debitBalanceLabel = new System.Windows.Forms.Label();
             userIdLabel = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.Balances.SuspendLayout();
@@ -90,18 +87,10 @@ namespace CryptoWallet
             cryptoBalanceLabel.AutoSize = true;
             cryptoBalanceLabel.Location = new System.Drawing.Point(42, 31);
             cryptoBalanceLabel.Name = "cryptoBalanceLabel";
-            cryptoBalanceLabel.Size = new System.Drawing.Size(121, 20);
+            cryptoBalanceLabel.Size = new System.Drawing.Size(71, 20);
             cryptoBalanceLabel.TabIndex = 0;
-            cryptoBalanceLabel.Text = "Crypto Balance:";
-            // 
-            // debitBalanceLabel
-            // 
-            debitBalanceLabel.AutoSize = true;
-            debitBalanceLabel.Location = new System.Drawing.Point(42, 54);
-            debitBalanceLabel.Name = "debitBalanceLabel";
-            debitBalanceLabel.Size = new System.Drawing.Size(113, 20);
-            debitBalanceLabel.TabIndex = 2;
-            debitBalanceLabel.Text = "Debit Balance:";
+            cryptoBalanceLabel.Text = "Balance:";
+            cryptoBalanceLabel.Click += new System.EventHandler(this.cryptoBalanceLabel_Click);
             // 
             // userIdLabel
             // 
@@ -167,6 +156,13 @@ namespace CryptoWallet
             this.transferToolStripMenuItem.Text = "Transfer";
             this.transferToolStripMenuItem.Click += new System.EventHandler(this.transferToolStripMenuItem_Click);
             // 
+            // downloadTransferHistoryToolStripMenuItem
+            // 
+            this.downloadTransferHistoryToolStripMenuItem.Name = "downloadTransferHistoryToolStripMenuItem";
+            this.downloadTransferHistoryToolStripMenuItem.Size = new System.Drawing.Size(324, 34);
+            this.downloadTransferHistoryToolStripMenuItem.Text = "Download Transfer History";
+            this.downloadTransferHistoryToolStripMenuItem.Click += new System.EventHandler(this.downloadTransferHistoryToolStripMenuItem_Click);
+            // 
             // currenciesToolStripMenuItem
             // 
             this.currenciesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -231,8 +227,6 @@ namespace CryptoWallet
             // 
             this.Balances.Controls.Add(cryptoBalanceLabel);
             this.Balances.Controls.Add(this.cryptoBalanceLabel1);
-            this.Balances.Controls.Add(debitBalanceLabel);
-            this.Balances.Controls.Add(this.debitBalanceLabel1);
             this.Balances.Controls.Add(userIdLabel);
             this.Balances.Controls.Add(this.userIdLabel1);
             this.Balances.Location = new System.Drawing.Point(426, 81);
@@ -252,15 +246,6 @@ namespace CryptoWallet
             // bankingInformationBindingSource
             // 
             this.bankingInformationBindingSource.DataSource = typeof(CryptoWallet.BankingInformation);
-            // 
-            // debitBalanceLabel1
-            // 
-            this.debitBalanceLabel1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.bankingInformationBindingSource, "DebitBalance", true));
-            this.debitBalanceLabel1.Location = new System.Drawing.Point(169, 54);
-            this.debitBalanceLabel1.Name = "debitBalanceLabel1";
-            this.debitBalanceLabel1.Size = new System.Drawing.Size(100, 23);
-            this.debitBalanceLabel1.TabIndex = 3;
-            this.debitBalanceLabel1.Text = "label1";
             // 
             // userIdLabel1
             // 
@@ -464,13 +449,6 @@ namespace CryptoWallet
             this.label1.Size = new System.Drawing.Size(0, 36);
             this.label1.TabIndex = 14;
             // 
-            // downloadTransferHistoryToolStripMenuItem
-            // 
-            this.downloadTransferHistoryToolStripMenuItem.Name = "downloadTransferHistoryToolStripMenuItem";
-            this.downloadTransferHistoryToolStripMenuItem.Size = new System.Drawing.Size(324, 34);
-            this.downloadTransferHistoryToolStripMenuItem.Text = "Download Transfer History";
-            this.downloadTransferHistoryToolStripMenuItem.Click += new System.EventHandler(this.downloadTransferHistoryToolStripMenuItem_Click);
-            // 
             // HomeForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -521,7 +499,6 @@ namespace CryptoWallet
         private System.Windows.Forms.Panel Balances;
         private System.Windows.Forms.Label cryptoBalanceLabel1;
         private System.Windows.Forms.BindingSource bankingInformationBindingSource;
-        private System.Windows.Forms.Label debitBalanceLabel1;
         private System.Windows.Forms.Label userIdLabel1;
         private System.Windows.Forms.BindingNavigator bankingInformationBindingNavigator;
         private System.Windows.Forms.ToolStripButton bindingNavigatorAddNewItem;
